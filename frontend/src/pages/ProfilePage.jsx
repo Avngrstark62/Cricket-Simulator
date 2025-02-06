@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
-const Dashboard = () => {
+const ProfilePage = () => {
     const { user, logout } = useContext(AuthContext);
 
     return (
         <div>
-            <h2>Dashboard</h2>
+            <h2>Profile</h2>
             {user ? (
                 <>
                     <p>Welcome, {user.email}</p>
@@ -19,4 +19,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default ProfilePage;

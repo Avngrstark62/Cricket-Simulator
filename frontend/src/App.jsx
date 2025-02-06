@@ -1,31 +1,33 @@
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
-import RegisterForm from './components/RegisterForm';
-import LoginForm from './components/LoginForm';
-import Dashboard from './components/Dashboard';
 import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import Layout from './components/Layout';
+import AuthPage from './pages/AuthPage';
+import HomePage from './pages/HomePage'
+import ProfilePage from './pages/ProfilePage';
+import QuickMatchPage from './pages/QuickMatchPage';
 
 const App = () => {
     const { user } = useContext(AuthContext);
     return (
             <Router>
-                <nav>
-                    <Link to="/register">Register</Link>
-                    <Link to="/login">Login</Link>
-                    <Link to="/dashboard">Dashboard</Link>
-                </nav>
                 {user ? 
-                <Routes>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="*" element={<Navigate to="/dashboard" />} />
-            </Routes>
+                <Layout>
+                    <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/quick_match" element={<QuickMatchPage />} />
+                        <Route path="/quick_match/start_new" element={<QuickMatchPage />} />
+                        <Route path="/profile" element={<ProfilePage />} />
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </Layout>
+            
                 :
-                <Routes>
-                    <Route path="/register" element={<RegisterForm />} />
-                    <Route path="/login" element={<LoginForm />} />
-                    <Route path="*" element={<Navigate to="/login" />} />
-                </Routes>
+                    <Routes>
+                        <Route path="/auth" element={<AuthPage />} />
+                        <Route path="*" element={<Navigate to="/auth" />} />
+                    </Routes>
                 }
                 
             </Router>
