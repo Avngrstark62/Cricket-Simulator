@@ -7,30 +7,37 @@ import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage'
 import ProfilePage from './pages/ProfilePage';
 import QuickMatchPage from './pages/QuickMatchPage';
+import MatchSetup from './components/MatchSetup';
 
 const App = () => {
-    const { user } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
+
+    if (loading) {
+        return <div>Loading...</div>; // Or a spinner component
+    }
+
     return (
-            <Router>
-                {user ? 
-                <Layout>
+        <Router>
+            {user ? (
+                <Routes>
+                <Route path="/quick_match/match_setup" element={<MatchSetup />} />
+                <Route path="/quick_match/play" element={<h1>Play</h1>} />
+                <Route path="*" element={<Layout>
                     <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/quick_match" element={<QuickMatchPage />} />
-                        <Route path="/quick_match/start_new" element={<QuickMatchPage />} />
-                        <Route path="/profile" element={<ProfilePage />} />
-                        <Route path="*" element={<Navigate to="/" />} />
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/quick_match" element={<QuickMatchPage />} />
+                      <Route path="/profile" element={<ProfilePage />} />
+                      <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
-                </Layout>
-            
-                :
-                    <Routes>
-                        <Route path="/auth" element={<AuthPage />} />
-                        <Route path="*" element={<Navigate to="/auth" />} />
-                    </Routes>
-                }
-                
-            </Router>
+                  </Layout>} />
+              </Routes>
+            ) : (
+                <Routes>
+                    <Route path="/auth" element={<AuthPage />} />
+                    <Route path="*" element={<Navigate to="/auth" />} />
+                </Routes>
+            )}
+        </Router>
     );
 };
 

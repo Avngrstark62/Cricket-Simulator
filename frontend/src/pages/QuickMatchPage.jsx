@@ -4,10 +4,10 @@ const QuickMatchPage = () => {
     return (
         <div>
             <h1>Quick Match</h1>
-            {/* <div>
-                <Link to="/quick_match/start_new" className='start-new-match-link'>
-                    Start New Match
-                </Link>
+            <div>
+            <Link to="/quick_match/match_setup" className='start-new-match-link' target="_blank" rel="noopener noreferrer">
+                Start New Match
+            </Link>
             </div>
 
             <div>
@@ -16,7 +16,7 @@ const QuickMatchPage = () => {
 
             <div>
                 <h2>Finished Matches</h2>
-            </div> */}
+            </div>
         </div>
     );
 };
