@@ -7,7 +7,7 @@ import AuthPage from './pages/AuthPage';
 import HomePage from './pages/HomePage'
 import ProfilePage from './pages/ProfilePage';
 import QuickMatchPage from './pages/QuickMatchPage';
-import MatchSetup from './components/MatchSetup';
+import MatchSetup from './pages/MatchSetup';
 
 const App = () => {
     const { user, loading } = useContext(AuthContext);

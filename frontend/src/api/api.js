@@ -11,3 +11,4 @@ export const logoutUser = () => API.post('/auth/logout');
 export const getMe = () => API.get('/auth/me');
 
 export const createMatch = (formData) => API.post('/match/create', formData);
+export const fetchDefaultPlayingXI = (formData) => API.post('/match/default_xi', formData);
