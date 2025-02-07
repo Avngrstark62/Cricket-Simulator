@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js"
+import matchRoutes from "./routes/match.routes.js"
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use(
 connectDB();
 
 app.use("/auth", authRoutes);
+app.use("/match", matchRoutes);
 
 app.get("/", (req, res) => {
     res.send('Server is running');
