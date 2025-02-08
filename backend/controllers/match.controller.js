@@ -19,6 +19,10 @@ export const createMatch = async (req, res) => {
                 teamB: playingXI_B,
             },
             // Initial state values
+            toss: {
+                winner: null,
+                electedTo: null
+            },
             currentInning: 1,
             score: {
                 teamA: { runs: 0, wickets: 0, balls: 0 },
@@ -69,6 +73,114 @@ export const fetchDefaultPlayingXI = async (req, res) => {
         return res.status(200).json({ success: true, playing_xi });
     } catch (error) {
         console.error("Error fetching default playing XI:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchTossDetails = async (req, res) => {
+    try {
+        const { id } = req.params
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const tossDetails = {
+            tossWinner: match.toss.winner,
+            electedTo: match.toss.electedTo
+        }
+
+        return res.status(200).json({ success: true, tossDetails: tossDetails });
+    } catch (error) {
+        console.error("Error fetching toss details:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const updateTossDetails = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+
+        const { tossDetails } = req.body;
+
+        match.toss.winner = tossDetails.tossWinner;
+        match.toss.electedTo = tossDetails.electedTo;
+        
+        await match.save();
+
+
+        return res.status(200).json({ success: true, tossDetails: tossDetails });
+    } catch (error) {
+        console.error("Error updating toss details:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchTeams = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+
+        // const teams = match.teams
+        const teams = {
+            teamA: match.teams.teamA,
+            teamB: match.teams.teamB
+        }
+
+
+        return res.status(200).json({ success: true, teams: teams });
+    } catch (error) {
+        console.error("Error fetching teams:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchIsTossDone = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+
+        let isTossDone=false;
+        if (match.toss.winner && match.toss.electedTo){
+            isTossDone=true;
+        }
+
+
+        return res.status(200).json({ success: true, isTossDone: isTossDone });
+    } catch (error) {
+        console.error("Error fetching isTossDone:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchInningNumber = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+
+        const inningNumber = match.currentInning;
+        
+        return res.status(200).json({ success: true, inningNumber: inningNumber });
+    } catch (error) {
+        console.error("Error fetching inning number:", error);
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 };

@@ -8,6 +8,7 @@ import HomePage from './pages/HomePage'
 import ProfilePage from './pages/ProfilePage';
 import QuickMatchPage from './pages/QuickMatchPage';
 import MatchSetup from './pages/MatchSetup';
+import PlayMatch from './pages/PlayMatch';
 
 const App = () => {
     const { user, loading } = useContext(AuthContext);
@@ -21,7 +22,7 @@ const App = () => {
             {user ? (
                 <Routes>
                 <Route path="/quick_match/match_setup" element={<MatchSetup />} />
-                <Route path="/quick_match/play" element={<h1>Play</h1>} />
+                <Route path="/quick_match/play/:id" element={<PlayMatch/>} />
                 <Route path="*" element={<Layout>
                     <Routes>
                       <Route path="/" element={<HomePage />} />

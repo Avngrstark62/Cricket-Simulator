@@ -18,8 +18,8 @@ const matchSchema = new mongoose.Schema(
     },
 
     toss: {
-      winner: { type: String, enum: ["teamA", "teamB"], required: false },
-      electedTo: { type: String, enum: ["bat", "bowl"], required: false },
+      winner: { type: String, default: null }, // enum: ["teamA", "teamB"]
+      electedTo: { type: String, default: null }, //enum: ["bat", "field"]
     },
 
     // State

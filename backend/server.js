@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db.js";
 import authRoutes from "./routes/auth.routes.js"
 import matchRoutes from "./routes/match.routes.js"
+import inningRoutes from "./routes/inning.route.js"
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ connectDB();
 
 app.use("/auth", authRoutes);
 app.use("/match", matchRoutes);
+app.use("/inning", inningRoutes)
 
 app.get("/", (req, res) => {
     res.send('Server is running');

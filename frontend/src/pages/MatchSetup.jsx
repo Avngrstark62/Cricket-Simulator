@@ -80,9 +80,10 @@ const MatchSetup = () => {
     if (!isStepValid()) return;
     setLoading(true);
     try {
-      await createMatch(formData);
+      const response = await createMatch(formData);
       alert("Match Created Successfully!");
-      navigate("/quick_match/play")
+      const id=response.data.match._id
+      navigate(`/quick_match/play/${id}`);
     } catch (error) {
       console.log(error)
       alert("Error creating match");
