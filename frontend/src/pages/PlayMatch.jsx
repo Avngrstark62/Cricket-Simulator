@@ -6,7 +6,7 @@ import Inning from "../components/Inning";
 
 const PlayMatch = () => {
     const { id } = useParams();
-    const [isTossDone, setIsTossDone] = useState(false);
+    const [isTossDone, setIsTossDone] = useState("un-init");
     const [teams, setTeams] = useState({
       teamA: "",
       teamB: ""
@@ -35,15 +35,15 @@ const PlayMatch = () => {
         FetchIsTossDone();
     }, [id]);
 
-    return (
-        <div>
-            <h1>Play Match - {teams.teamA} vs {teams.teamB}</h1>
-
-            {isTossDone
-            ? <Inning id={id}/>
-            : <Toss id={id} teams={teams} setIsTossDone={setIsTossDone}/>}
-        </div>
-    );
+    if (isTossDone==true){
+        return (<Inning id={id} teams={teams}/>)
+    }
+    else if(isTossDone==false){
+        return (<Toss id={id} teams={teams} setIsTossDone={setIsTossDone}/>)
+    }
+    else{
+        return (<p>checking toss details...</p>)
+    }
 };
 
 export default PlayMatch

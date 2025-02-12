@@ -1,0 +1,33 @@
+/* Main screen container */
+.main-screen {
+    width: 90vw; /* Covers 90% of the screen width */
+    height: 90vh; /* Covers 90% of the screen height */
+    margin: auto; /* Centers the container */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to right, #1e3c72, #2a5298);
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Header inside the main screen */
+.main-screen-header {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* Content wrapper */
+/* .main-content {
+    width: 80%;
+    height: 70%;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    overflow: auto;
+} */

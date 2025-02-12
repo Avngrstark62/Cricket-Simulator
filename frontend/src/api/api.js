@@ -21,12 +21,16 @@ export const fetchMatchStatus = (id) => API.get(`/match/match_status/${id}`);
 
 export const fetchBattingTeam = (id) => API.get(`/inning/batting_team/${id}`);
 export const fetchBowlingTeam = (id) => API.get(`/inning/bowling_team/${id}`);
-export const fetchScoreboard = (id) => API.get(`/inning/fetch_scoreboard/${id}`);
+export const fetchScore = (id) => API.get(`/inning/fetch_scoreboard/${id}`);
+export const fetchScorecard = (id, formData) => API.post(`/inning/fetch_scorecard/${id}`, formData);
 export const fetchBattingScorecard = (id) => API.get(`/inning/batting_scorecard/${id}`);
 export const fetchBowlingScorecard = (id) => API.get(`/inning/bowling_scorecard/${id}`);
 export const fetchStriker = (id) => API.get(`/inning/striker/${id}`);
 export const fetchNonStriker = (id) => API.get(`/inning/non_striker/${id}`);
 export const fetchBowler = (id) => API.get(`/inning/bowler/${id}`);
+export const fetchStrikerStats = (id) => API.get(`/inning/striker_stats/${id}`);
+export const fetchNonStrikerStats = (id) => API.get(`/inning/nonstriker_stats/${id}`);
+export const fetchBowlerStats = (id) => API.get(`/inning/bowler_stats/${id}`);
 
 export const fetchAvailableBatsmen = (id) => API.get(`/inning/available_batsmen/${id}`);
 export const addNewBatsman = (id, formData) => API.post(`/inning/add_new_batsman/${id}`, formData);

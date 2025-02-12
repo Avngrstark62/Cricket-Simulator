@@ -1,13 +1,17 @@
+import '../styles/main-screen.css'
+
 import { useState, useEffect } from "react";
 import { fetchBattingTeam, fetchBowler, fetchBowlingTeam, fetchInningNumber, fetchMatchStatus, fetchNonStriker, fetchStriker, throwDelivery } from "../api/api";
-import BattingScorecard from "./BattingScorecard"
-import BowlingScorecard from "./BowlingScorecard"
 import SelectStriker from "./SelectStriker";
 import SelectNonStriker from "./SelectNonStriker";
 import SelectBowler from "./SelectBowler";
 import Scoreboard from "./Scoreboard";
+import Scorecard from "./Scorecard";
+import PostMatch from "./PostMatch";
 
-const Inning = ({id}) => {
+const Inning = ({id, teams}) => {
+    const [showScorecard, setShowScorecard] = useState(null);
+
     const [matchStatus, setMatchStatus] = useState(null);
     const [inningNumber, setInningNumber] = useState(1);
     const [battingTeam, setBattingTeam] = useState(null);
@@ -104,40 +108,96 @@ const Inning = ({id}) => {
         await ThrowDelivery();
         setCount((prev) => prev + 1);
       };
+    
+    if (matchStatus=="unfinished"){
+        return (
+            <div className="main-screen">
 
-    return (
-        <div>
-            {matchStatus=="unfinished" && 
-            (
-                <div>
+                <div className="playground-container">
+                    <div>
+                        {thisDelivery && JSON.stringify(thisDelivery)}
+                    </div>
+                    {!bowler ? (
+                        <SelectBowler id={id} />
+                    ) : !striker ? (
+                        <SelectStriker id={id} />
+                    ) : !nonStriker ? (
+                        <SelectNonStriker id={id} />
+                    ) : (
+                        <button onClick={handleThroughBall}>Through Ball</button>
+                    )}
+                </div>
+
+                <div className="actions-container">
+                    <h3>Show Scorecard</h3>
+                    {!showScorecard && <button onClick={() => setShowScorecard(1)}>Inning 1</button>}
+                    {!showScorecard && <button onClick={() => setShowScorecard(2)}>Inning 2</button>}
+                    <Scorecard show={showScorecard} onClose={() => setShowScorecard(null)} id={id} inningNumber={showScorecard} />
+                </div>
+                
+                <div className="scoreboard-container">
+                    <h1>{teams.teamA} vs {teams.teamB}</h1>
                     <div>Inning {inningNumber} - {battingTeam}</div>
-                <p>Striker: {striker}</p>
-                <p>Non Striker: {nonStriker}</p>
-                <p>Bowler: {bowler}</p>
-                <div>
-                    {thisDelivery && JSON.stringify(thisDelivery)}
+                    <p>Striker: {striker}</p>
+                    <p>Non Striker: {nonStriker}</p>
+                    <p>Bowler: {bowler}</p>
+                    <Scoreboard id={id} count={count}/>
                 </div>
-                {!bowler ? (
-                    <SelectBowler id={id} />
-                ) : !striker ? (
-                    <SelectStriker id={id} />
-                ) : !nonStriker ? (
-                    <SelectNonStriker id={id} />
-                ) : (
-                    <button onClick={handleThroughBall}>Through Ball</button>
-                )}
-                <Scoreboard id={id} count={count}/>
-                <BattingScorecard id={id} battingTeam={battingTeam} count={count}/>
-                <BowlingScorecard id={id} bowlingTeam={bowlingTeam} count={count}/>
-                </div>
-            )
-        }
 
-        {matchStatus=="finished" && (
-            <h1>Match Finished</h1>
-        )}
-        </div>
-    );
+            </div>
+        )
+    }
+    else if(matchStatus=="finished"){
+        return (<PostMatch/>)
+    }
+    else{
+        return (<p>Loading Match Status...</p>)
+    }
+
+    // return (
+    //     <div className="main-screen">
+    //         <h1 className="main-screen-header">{teams.teamA} vs {teams.teamB}</h1>
+
+    //         {matchStatus=="unfinished" && 
+    //         (
+    //             <div>
+    //                 <div>Inning {inningNumber} - {battingTeam}</div>
+    //                 <p>Striker: {striker}</p>
+    //                 <p>Non Striker: {nonStriker}</p>
+    //                 <p>Bowler: {bowler}</p>
+    //                 <div>
+    //                     {thisDelivery && JSON.stringify(thisDelivery)}
+    //                 </div>
+    //                 {!bowler ? (
+    //                     <SelectBowler id={id} />
+    //                 ) : !striker ? (
+    //                     <SelectStriker id={id} />
+    //                 ) : !nonStriker ? (
+    //                     <SelectNonStriker id={id} />
+    //                 ) : (
+    //                     <button onClick={handleThroughBall}>Through Ball</button>
+    //                 )}
+    //                 <Scoreboard id={id} count={count}/>
+    
+    //                 <div>
+    //                     <h3>Show Scorecard</h3>
+    //                     {!showScorecard && <button onClick={() => setShowScorecard(1)}>Inning 1</button>}
+    //                     {!showScorecard && <button onClick={() => setShowScorecard(2)}>Inning 2</button>}
+    //                     <Scorecard show={showScorecard} onClose={() => setShowScorecard(null)} id={id} inningNumber={showScorecard} />
+    //                 </div>
+    //             </div>
+    //         )
+    //     }
+
+    //     {matchStatus=="finished" && (
+    //         <PostMatch/>
+    //     )}
+
+    //     {matchStatus==null && (
+    //         <p>Loading Match Status...</p>
+    //     )}
+    //     </div>
+    // );
 };
 
 export default Inning;

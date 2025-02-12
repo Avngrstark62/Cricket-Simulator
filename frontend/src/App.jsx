@@ -14,7 +14,7 @@ const App = () => {
     const { user, loading } = useContext(AuthContext);
 
     if (loading) {
-        return <div>Loading...</div>; // Or a spinner component
+        return <div>App is Loading...</div>; // Or a spinner component
     }
 
     return (

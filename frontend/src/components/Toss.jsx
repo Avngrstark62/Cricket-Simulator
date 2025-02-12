@@ -1,3 +1,5 @@
+import '../styles/main-screen.css'
+
 import { useState, useEffect } from "react";
 import { updateTossDetails, fetchTossDetails } from "../api/api";
 
@@ -67,7 +69,8 @@ const Toss = ({ id, teams, setIsTossDone }) => {
     }
 
     return (
-        <div>
+        <div className="main-screen">
+            <h1 className="main-screen-header">{teams.teamA} vs {teams.teamB}</h1>
             <h2>Toss</h2>
             {tossDetails.tossWinner && tossDetails.electedTo
             ?

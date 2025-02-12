@@ -152,6 +152,58 @@ export const fetchScoreboard = async (req, res) => {
     }
 };
 
+export const fetchScorecard = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { inningNumber } = req.body;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const tossWinner = match.toss.winner;
+        const electedTo = match.toss.electedTo;
+    
+        let battingScorecard = null;
+        let bowlingScorecard = null;
+
+        if (inningNumber==1){
+            if((tossWinner=="teamA" && electedTo=="bat") || (tossWinner=="teamB" && electedTo=="field")){
+                battingScorecard = match.battingScorecard.teamA;
+                bowlingScorecard = match.bowlingScorecard.teamB;
+            }
+            else{
+                battingScorecard = match.battingScorecard.teamB;
+                bowlingScorecard = match.bowlingScorecard.teamA;
+            }
+        }
+        else if(inningNumber==2){
+            if((tossWinner=="teamA" && electedTo=="bat") || (tossWinner=="teamB" && electedTo=="field")){
+                battingScorecard = match.battingScorecard.teamB;
+                bowlingScorecard = match.bowlingScorecard.teamA;
+            }
+            else{
+                battingScorecard = match.battingScorecard.teamA;
+                bowlingScorecard = match.bowlingScorecard.teamB;
+            }
+        }
+        else{
+            return res.status(400).json({ success: false, message: "Invalid Inning Number" });;
+        }
+
+        const scorecard = {
+            battingScorecard: battingScorecard,
+            bowlingScorecard: bowlingScorecard
+        }
+        
+        return res.status(200).json({ success: true, scorecard: scorecard });
+    } catch (error) {
+        console.error("Error fetching scorecard:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
 export const fetchBattingScorecard = async (req, res) => {
     try {
         const { id } = req.params;
@@ -469,6 +521,114 @@ export const throwDelivery = async (req, res) => {
         return res.status(200).json({ success: true, delivery: delivery.toJSON() });
     } catch (error) {
         console.error("Error throwing delivery:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchStrikerStats = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const battingTeamLabel = getBattingTeamLabel(match);
+        
+        let battingScorecard = null;
+        if (battingTeamLabel=="teamA"){
+            battingScorecard = match.battingScorecard.teamA
+        }
+        else if (battingTeamLabel=="teamB"){
+            battingScorecard = match.battingScorecard.teamB
+        }
+        else{
+            return res.status(400).json({ success: false, message: "Invalid Batting Team Label" });
+        }
+
+        let stats = null;
+        for(let i=0; i<battingScorecard.length; i++){
+            if (battingScorecard[i].name==match.striker){
+                stats=battingScorecard[i]
+            }
+        }
+        
+        return res.status(200).json({ success: true, stats: stats });
+    } catch (error) {
+        console.error("Error fetching striker stats:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchNonStrikerStats = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const battingTeamLabel = getBattingTeamLabel(match);
+        
+        let battingScorecard = null;
+        if (battingTeamLabel=="teamA"){
+            battingScorecard = match.battingScorecard.teamA
+        }
+        else if (battingTeamLabel=="teamB"){
+            battingScorecard = match.battingScorecard.teamB
+        }
+        else{
+            return res.status(400).json({ success: false, message: "Invalid Batting Team Label" });
+        }
+
+        let stats = null;
+        for(let i=0; i<battingScorecard.length; i++){
+            if (battingScorecard[i].name==match.nonStriker){
+                stats=battingScorecard[i]
+            }
+        }
+        
+        return res.status(200).json({ success: true, stats: stats });
+    } catch (error) {
+        console.error("Error fetching nonStriker stats:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchBowlerStats = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const battingTeamLabel = getBattingTeamLabel(match);
+        
+        let bowlingScorecard = null;
+        if (battingTeamLabel=="teamA"){
+            bowlingScorecard = match.bowlingScorecard.teamB
+        }
+        else if (battingTeamLabel=="teamB"){
+            bowlingScorecard = match.bowlingScorecard.teamA
+        }
+        else{
+            return res.status(400).json({ success: false, message: "Invalid Batting Team Label" });
+        }
+
+        let stats = null;
+        for(let i=0; i<bowlingScorecard.length; i++){
+            if (bowlingScorecard[i].name==match.bowler){
+                stats=bowlingScorecard[i]
+            }
+        }
+        
+        return res.status(200).json({ success: true, stats: stats });
+    } catch (error) {
+        console.error("Error fetching bowler stats:", error);
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
