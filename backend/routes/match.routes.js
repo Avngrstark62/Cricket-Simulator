@@ -1,5 +1,5 @@
 import express from 'express';
-import { createMatch, fetchDefaultPlayingXI, fetchInningNumber, fetchIsTossDone, fetchTeams, fetchTossDetails, updateTossDetails } from '../controllers/match.controller.js';
+import { createMatch, fetchDefaultPlayingXI, fetchInningNumber, fetchIsTossDone, fetchMatchStatus, fetchTeams, fetchTossDetails, updateTossDetails } from '../controllers/match.controller.js';
 import { authMiddleware } from "../middleware/auth.middleware.js"
 
 const router = express.Router();
@@ -14,5 +14,6 @@ router.get('/is_toss_done/:id', authMiddleware, fetchIsTossDone);
 router.get('/team_names/:id', authMiddleware, fetchTeams);
 
 router.get('/inning_number/:id', authMiddleware, fetchInningNumber);
+router.get('/match_status/:id', authMiddleware, fetchMatchStatus);
 
 export default router;

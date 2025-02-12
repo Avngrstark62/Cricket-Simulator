@@ -21,6 +21,10 @@ const SelectStriker = ({id}) => {
     const handleSubmit = () => {
         const UpdateStriker = async () => {
             try {
+                if (!selected) {
+                    alert("Please select an option.");
+                    return;
+                }
                 const formData = {
                     batsman: selected,
                     end: "striker"
@@ -36,7 +40,6 @@ const SelectStriker = ({id}) => {
     return (
         <div>
             <h3>Select Striker</h3>
-
             <form onSubmit={handleSubmit}>
               <label>
                 Choose an option:
@@ -49,7 +52,6 @@ const SelectStriker = ({id}) => {
               </label>
               <button type="submit">Submit</button>
             </form>
-
         </div>
     );
 };

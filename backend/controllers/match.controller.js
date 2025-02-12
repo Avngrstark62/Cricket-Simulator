@@ -185,3 +185,21 @@ export const fetchInningNumber = async (req, res) => {
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
+export const fetchMatchStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+
+        const matchStatus = match.status;
+        
+        return res.status(200).json({ success: true, matchStatus: matchStatus });
+    } catch (error) {
+        console.error("Error fetching match status:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};

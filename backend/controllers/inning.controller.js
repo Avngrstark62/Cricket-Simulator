@@ -1,5 +1,5 @@
 import Match from "../models/match.model.js";
-import { Delivery, updateBattingScorecard, updateBowlingScorecard, updateCurrentInning, updateScore, updateStrikeAndBowler } from "./delivery.controller.js";
+import { Delivery, updateBattingScorecard, updateBowlingScorecard, updateCurrentInning, updateScore, updateStatus, updateStrikeAndBowler, updateWinner } from "./delivery.controller.js";
 
 const getBattingTeamLabel = (match) => {
     const inningNumber = match.currentInning;
@@ -142,6 +142,8 @@ export const fetchScoreboard = async (req, res) => {
         else{
             return res.status(400).json({ success: false, message: "Invalid Batting Team Label" });
         }
+
+        // console.log(match.score)
         
         return res.status(200).json({ success: true, scoreboard: scoreboard });
     } catch (error) {
@@ -451,12 +453,18 @@ export const throwDelivery = async (req, res) => {
         await updateStrikeAndBowler(match, delivery);
         // updateThisOver(match, delivery);
         if (match.currentInning==1){
-            updateCurrentInning(match)
+            await updateCurrentInning(match)
         }
         else{
-            // updateStatus(match, delivery);
-            // updateWinner(match, delivery);
+            await updateStatus(match);
         }
+        if (match.status=="finished"){
+            await updateWinner(match);
+        }
+
+        // console.log(match.score)
+        // console.log(match.status)
+        // console.log(match.winner)
         
         return res.status(200).json({ success: true, delivery: delivery.toJSON() });
     } catch (error) {

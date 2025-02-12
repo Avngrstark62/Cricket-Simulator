@@ -17,6 +17,7 @@ export const updateTossDetails = (id, formData) => API.post(`/match/toss_details
 export const fetchIsTossDone = (id) => API.get(`/match/is_toss_done/${id}`);
 export const fetchTeams = (id) => API.get(`/match/team_names/${id}`);
 export const fetchInningNumber = (id) => API.get(`/match/inning_number/${id}`);
+export const fetchMatchStatus = (id) => API.get(`/match/match_status/${id}`);
 
 export const fetchBattingTeam = (id) => API.get(`/inning/batting_team/${id}`);
 export const fetchBowlingTeam = (id) => API.get(`/inning/bowling_team/${id}`);

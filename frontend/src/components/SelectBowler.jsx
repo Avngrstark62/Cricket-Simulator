@@ -21,6 +21,10 @@ const SelectBowler = ({id}) => {
     const handleSubmit = () => {
         const UpdateBowler = async () => {
                     try {
+                        if (!selected) {
+                            alert("Please select an option.");
+                            return;
+                        }
                         const formData = {
                             bowler: selected,
                         }

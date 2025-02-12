@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchInningNumber, fetchIsTossDone, fetchTeams } from "../api/api";
+import { fetchIsTossDone, fetchTeams } from "../api/api";
 import Toss from "../components/Toss";
 import Inning from "../components/Inning";
 
@@ -11,7 +11,6 @@ const PlayMatch = () => {
       teamA: "",
       teamB: ""
     });
-    const [inningNumber, setInningNumber] = useState(1);
 
     useEffect(() => {
         const FetchTeams = async () => {
@@ -31,26 +30,17 @@ const PlayMatch = () => {
                 console.error("Error fetching isTossDone", error);
             }
         };
-
-        const FetchInningNumber = async () => {
-            try {
-                const response = await fetchInningNumber(id);
-                setInningNumber(response.data.inningNumber);
-            } catch (error) {
-                console.error("Error fetching inning number", error);
-            }
-        };
         
         FetchTeams();
         FetchIsTossDone();
-        FetchInningNumber();
     }, [id]);
 
     return (
         <div>
             <h1>Play Match - {teams.teamA} vs {teams.teamB}</h1>
+
             {isTossDone
-            ? <Inning id={id} inningNumber={inningNumber} setInningNumber={setInningNumber}/>
+            ? <Inning id={id}/>
             : <Toss id={id} teams={teams} setIsTossDone={setIsTossDone}/>}
         </div>
     );

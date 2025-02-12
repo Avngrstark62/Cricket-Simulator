@@ -98,7 +98,7 @@ const matchSchema = new mongoose.Schema(
       ],
     },
 
-    status: { type: String, enum: ["unfinished", "inProgress", "finished", "abandoned", "noResult"], default: "unfinished" },
+    status: { type: String, enum: ["unfinished", "finished"], default: "unfinished" },
     winner: { type: String, default: null },
   },
   { timestamps: true }

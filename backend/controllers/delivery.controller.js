@@ -441,3 +441,53 @@ export const updateCurrentInning = async (match) => {
     }
     await match.save();
 }
+
+export const updateStatus = async (match) => {
+
+    const battingTeamLabel = getBattingTeamLabel(match);
+    let score=null;
+    let targetChased=false
+    if (battingTeamLabel=="teamA"){
+        if (match.score.teamA.runs>match.score.teamB.runs){
+            targetChased=true
+        }
+        score = match.score.teamA
+    }
+    else if (battingTeamLabel=="teamB"){
+        if (match.score.teamA.runs<match.score.teamB.runs){
+            targetChased=true
+        }
+        score = match.score.teamB
+    }
+    else{
+        return res.status(400).json({ success: false, message: "Invalid Batting Team Label" });
+    }
+
+    let oversCompleted=false
+    if (score.balls==match.overs*6){
+        oversCompleted=true
+    }
+    // console.log(score.balls)
+    // console.log(match.overs*6)
+    let allout = false
+    if (score.wickets==10){
+        allout=true
+    }
+    if (oversCompleted || allout || targetChased){
+        match.status="finished"
+    }
+    await match.save();
+}
+
+export const updateWinner = async (match) => {
+    if (match.score.teamA.runs>match.score.teamB.runs){
+        match.winner="teamA"
+    }
+    else if(match.score.teamA.runs<match.score.teamB.runs){
+        match.winner="teamB"
+    }
+    else{
+        match.winner=null
+    }
+    await match.save();
+}

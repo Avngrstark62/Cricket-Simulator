@@ -21,6 +21,10 @@ const SelectNonStriker = ({id}) => {
     const handleSubmit = () => {
         const UpdateNonStriker = async () => {
                     try {
+                        if (!selected) {
+                            alert("Please select an option.");
+                            return;
+                        }
                         const formData = {
                             batsman: selected,
                             end: "nonStriker"
