@@ -32,6 +32,7 @@ export const createMatch = async (req, res) => {
             nonStriker: null,
             bowler: null,
             thisOver: [],
+            thisOverBalls: 0,
             battingScorecard: { teamA: [], teamB: [] },
             bowlingScorecard: { teamA: [], teamB: [] },
             status: "unfinished",

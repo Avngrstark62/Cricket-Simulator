@@ -44,7 +44,9 @@ const matchSchema = new mongoose.Schema(
         wicketType: { type: String, required: false }, // "bowled", "caught", etc.
         fielder: { type: String, required: false }, // Who took the catch / ran out the batsman
       }
-    ],    
+    ],
+    
+    thisOverBalls: {type: Number, default: 0},
 
     battingScorecard: {
       teamA: [
@@ -77,7 +79,7 @@ const matchSchema = new mongoose.Schema(
       teamA: [
         {
           name: String,
-          overs: Number,
+          balls: Number,
           maidens: Number,
           runsConceded: Number,
           wickets: Number,
@@ -87,7 +89,7 @@ const matchSchema = new mongoose.Schema(
       teamB: [
         {
           name: String,
-          overs: Number,
+          balls: Number,
           maidens: Number,
           runsConceded: Number,
           wickets: Number,
