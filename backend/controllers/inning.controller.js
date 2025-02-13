@@ -632,3 +632,75 @@ export const fetchBowlerStats = async (req, res) => {
         return res.status(500).json({ success: false, message: "Internal server error" });
     }
 };
+
+export const fetchVenue = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const venue = match.venue
+        
+        return res.status(200).json({ success: true, venue: venue });
+    } catch (error) {
+        console.error("Error fetching venue:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchTarget = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const battingTeamLabel = getBattingTeamLabel(match);
+        
+        let target = null;
+        if (battingTeamLabel=="teamA"){
+            target = match.score.teamB.runs+1
+        }
+        else if (battingTeamLabel=="teamB"){
+            target = match.score.teamA.runs+1
+        }
+        else{
+            return res.status(400).json({ success: false, message: "Invalid Batting Team Label" });
+        }
+        
+        return res.status(200).json({ success: true, target: target });
+    } catch (error) {
+        console.error("Error fetching target:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};
+
+export const fetchWinnerName = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const match = await Match.findById(id);
+
+        if (!match) {
+            return res.status(400).json({ success: false, message: "Match not found" });
+        }
+        
+        const winner = match.winner;
+        let winnerName = null;
+        if (winner=="teamA"){
+            winnerName=match.teams.teamA
+        }
+        else if (winner=="teamB"){
+            winnerName=match.teams.teamB
+        }
+        
+        return res.status(200).json({ success: true, winnerName: winnerName });
+    } catch (error) {
+        console.error("Error fetching winner:", error);
+        return res.status(500).json({ success: false, message: "Internal server error" });
+    }
+};

@@ -1,0 +1,80 @@
+.open-popup-button {
+    padding: 5px 10px; /* Small button size */
+    font-size: 0.9rem; /* Smaller text */
+    background: #ff6b6b; /* Beautiful red shade */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.open-popup-button:hover {
+    background: #e63946; /* Darker red on hover */
+    transform: scale(1.05); /* Slightly enlarges on hover */
+}
+
+
+/* Popup Overlay (Background Blur) */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Darker overlay for better contrast */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px); /* Subtle blur effect */
+}
+
+/* Popup Container */
+.popup-container {
+    background: white;
+    width: 80%; /* Takes most of the screen */
+    max-width: 800px; /* Restricts it from being too wide */
+    height: 80%; /* Covers most of parent */
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Header Section */
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Close Button */
+.close-popup-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.close-popup-btn:hover {
+    background: #e63946;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,61 @@
+.scorecard-container {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;  /* Align items in the center vertically */
+    gap: 10px; /* Space between title and buttons */
+}
+
+/* Scorecard Switch Buttons */
+.scorecard-switch {
+    display: flex;
+    gap: 10px;
+}
+
+.scorecard-switch button {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.scorecard-switch button:hover {
+    background: #388E3C;
+}
+
+/* Scorecard Section */
+.scorecard-section {
+    flex: 1;
+    overflow-y: auto; /* Enables scrolling if content overflows */
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table th {
+    background: #007BFF;
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background: #f2f2f2;
+}
+
+table td {
+    color: #000000;
+}

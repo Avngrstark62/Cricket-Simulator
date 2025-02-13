@@ -1,19 +1,29 @@
 /* Main screen container */
+
 .main-screen {
-    width: 90vw; /* Covers 90% of the screen width */
-    height: 90vh; /* Covers 90% of the screen height */
-    margin: auto; /* Centers the container */
+    width: 90vw;
+    height: 90vh;
+    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(to right, #1e3c72, #2a5298);
+    
+    /* Background Image */
+    background-image: url('../images/stadium1.jpg'); /* Replace with your image URL */
+    background-size: cover; /* Ensures it covers the entire div */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents tiling */
+    
+    /* Optional Overlay (For Better Readability) */
+    position: relative;
     border-radius: 12px;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
     color: white;
     text-align: center;
     padding: 20px;
 }
+
 
 /* Header inside the main screen */
 .main-screen-header {

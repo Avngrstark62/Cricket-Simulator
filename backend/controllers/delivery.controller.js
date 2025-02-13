@@ -426,8 +426,6 @@ export const updateCurrentInning = async (match) => {
     if (score.balls==match.overs*6){
         oversCompleted=true
     }
-    // console.log(score.balls)
-    // console.log(match.overs*6)
     let allout = false
     if (score.wickets==10){
         allout=true
@@ -467,8 +465,6 @@ export const updateStatus = async (match) => {
     if (score.balls==match.overs*6){
         oversCompleted=true
     }
-    // console.log(score.balls)
-    // console.log(match.overs*6)
     let allout = false
     if (score.wickets==10){
         allout=true

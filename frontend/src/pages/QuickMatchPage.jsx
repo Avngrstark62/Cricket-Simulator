@@ -1,21 +1,14 @@
 import { Link } from "react-router-dom";
+import '../styles/quick-match-page.css'
 
 const QuickMatchPage = () => {
     return (
-        <div>
-            <h1>Quick Match</h1>
-            <div>
-            <Link to="/quick_match/match_setup" className='start-new-match-link' target="_blank" rel="noopener noreferrer">
-                Start New Match
-            </Link>
-            </div>
-
-            <div>
-                <h2>Continue Unfinished Match</h2>
-            </div>
-
-            <div>
-                <h2>Finished Matches</h2>
+        <div className="quick-match-container">
+            <h1 className="quick-match-title">Quick Match</h1>
+            <div className="link-container">
+                <Link to="/quick_match/match_setup" className="start-new-match-link" target="_blank" rel="noopener noreferrer">
+                    Start New Match
+                </Link>
             </div>
         </div>
     );

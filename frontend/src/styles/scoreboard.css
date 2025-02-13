@@ -1,13 +1,16 @@
 .scoreboard-container {
+    height: 10%;
     width: 100%;
+    /* padding: 10px; */
+    /* border-radius: 8px; */
+    margin-top: auto;
 }
 
 .scoreboard {
     display: flex;
     flex-direction: row;
-    height: 45%;
+    height: 100%;
     width: 100%;
-    /* background-color: rgb(27, 218, 154); */
 
     /* display: flex;
     width: 100%;

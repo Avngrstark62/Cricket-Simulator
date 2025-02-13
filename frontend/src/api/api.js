@@ -39,3 +39,7 @@ export const fetchAvailableBowlers = (id) => API.get(`/inning/available_bowlers/
 export const updateBowler = (id, formData) => API.post(`/inning/update_bowler/${id}`, formData);
 
 export const throwDelivery = (id) => API.get(`/inning/throw_delivery/${id}`);
+
+export const fetchVenue = (id) => API.get(`/inning/fetch_venue/${id}`);
+export const fetchTarget = (id) => API.get(`/inning/fetch_target/${id}`);
+export const fetchWinnerName = (id) => API.get(`/inning/fetch_winner_name/${id}`);

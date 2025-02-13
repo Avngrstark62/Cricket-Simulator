@@ -1,6 +1,6 @@
 import express from 'express';
 import { authMiddleware } from "../middleware/auth.middleware.js"
-import { addNewBatsman, changeBowler, fetchAvailableBatsmen, fetchAvailableBowlers, fetchBattingScorecard, fetchBattingTeam, fetchBowler, fetchBowlerStats, fetchBowlingScorecard, fetchBowlingTeam, fetchNonStriker, fetchNonStrikerStats, fetchScoreboard, fetchScorecard, fetchStriker, fetchStrikerStats, throwDelivery } from '../controllers/inning.controller.js';
+import { addNewBatsman, changeBowler, fetchAvailableBatsmen, fetchAvailableBowlers, fetchBattingScorecard, fetchBattingTeam, fetchBowler, fetchBowlerStats, fetchBowlingScorecard, fetchBowlingTeam, fetchNonStriker, fetchNonStrikerStats, fetchScoreboard, fetchScorecard, fetchStriker, fetchStrikerStats, fetchTarget, fetchVenue, fetchWinnerName, throwDelivery } from '../controllers/inning.controller.js';
 
 const router = express.Router();
 
@@ -20,6 +20,9 @@ router.post('/update_bowler/:id', authMiddleware, changeBowler);
 router.get('/striker_stats/:id', authMiddleware, fetchStrikerStats);
 router.get('/nonstriker_stats/:id', authMiddleware, fetchNonStrikerStats);
 router.get('/bowler_stats/:id', authMiddleware, fetchBowlerStats);
+router.get('/fetch_venue/:id', authMiddleware, fetchVenue);
+router.get('/fetch_target/:id', authMiddleware, fetchTarget);
+router.get('/fetch_winner_name/:id', authMiddleware, fetchWinnerName);
 
 router.get('/throw_delivery/:id', authMiddleware, throwDelivery);
 export default router;

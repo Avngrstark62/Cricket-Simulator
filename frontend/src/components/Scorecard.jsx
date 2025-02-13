@@ -25,20 +25,22 @@ const Scorecard = ({show, onClose, id, inningNumber}) => {
         }, [id, inningNumber]);
 
     return (
-        <div className="modal-overlay">
-            <div className="model-content">
-                <button onClick={onClose}>X</button>
-                <h2>Scorecard</h2>
-    
-                <div>
-                    {<button onClick={() => setScorecardType("batting")}>Batting</button>}
-                    {<button onClick={() => setScorecardType("bowling")}>Bowling</button>}
+        <div className="popup-overlay">
+            <div className="popup-container">
+                <div className="popup-header">
+                    <button className="close-popup-btn" onClick={onClose}>X</button>
+                    <div className="scorecard-switch">
+                        <button onClick={() => setScorecardType("batting")}>Batting</button>
+                        <button onClick={() => setScorecardType("bowling")}>Bowling</button>
+                    </div>
                 </div>
-    
-                {scorecardType=="batting" && (
-                    <div>
+        
+                <h2 className="popup-title">Scorecard</h2>
+        
+                {scorecardType === "batting" && (
+                    <div className="scorecard-section">
                         <h2>Batting Scorecard</h2>
-                        <table border="1">
+                        <table>
                             <thead>
                                 <tr>
                                     <th>Player Name</th>
@@ -51,7 +53,7 @@ const Scorecard = ({show, onClose, id, inningNumber}) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {scorecard.battingScorecard && scorecard.battingScorecard.map((player) => (
+                                {scorecard.battingScorecard?.map((player) => (
                                     <tr key={player.name}>
                                         <td>{player.name}</td>
                                         <td>{player.runs}</td>
@@ -59,18 +61,18 @@ const Scorecard = ({show, onClose, id, inningNumber}) => {
                                         <td>{player.fours}</td>
                                         <td>{player.sixes}</td>
                                         <td>{player.strikeRate}</td>
-                                        <td>{player.howOut ? player.howOut + ' ' + player.bowler : 'NotOut'}</td>
+                                        <td>{player.howOut ? `${player.howOut} ${player.bowler}` : 'NotOut'}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
                     </div>
                 )}
-    
-                {scorecardType=="bowling" && (
-                    <div>
+        
+                {scorecardType === "bowling" && (
+                    <div className="scorecard-section">
                         <h2>Bowling Scorecard</h2>
-                        <table border="1">
+                        <table>
                             <thead>
                                 <tr>
                                     <th>Player Name</th>
@@ -82,7 +84,7 @@ const Scorecard = ({show, onClose, id, inningNumber}) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {scorecard.bowlingScorecard && scorecard.bowlingScorecard.map((player) => (
+                                {scorecard.bowlingScorecard?.map((player) => (
                                     <tr key={player.name}>
                                         <td>{player.name}</td>
                                         <td>{player.maidens}</td>

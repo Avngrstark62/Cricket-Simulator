@@ -1,0 +1,32 @@
+.match-result-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+
+.result-box {
+    padding: 20px 40px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+}
+
+.result-box:hover {
+    transform: scale(1.05);
+}
+
+.winner {
+    background-color: #28a745;
+    color: white;
+    border: 3px solid #218838;
+}
+
+.no-result {
+    background-color: #ffc107;
+    color: #856404;
+    border: 3px solid #d39e00;
+}

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchBattingTeam, fetchBowler, fetchBowlerStats, fetchBowlingTeam, fetchInningNumber, fetchNonStriker, fetchNonStrikerStats, fetchScore, fetchStriker, fetchStrikerStats } from "../api/api";
-import '../styles/scoreboard.css';
+import { fetchBattingTeam, fetchBowler, fetchBowlerStats, fetchBowlingTeam, fetchInningNumber, fetchNonStriker, fetchNonStrikerStats, fetchScore, fetchStriker, fetchStrikerStats, fetchTarget, fetchVenue } from "../api/api";
 
 const Scoreboard = ({id, count}) => {
     const [score, setScore] = useState(null);
@@ -13,6 +12,8 @@ const Scoreboard = ({id, count}) => {
     const [strikerStats, setStrikerStats] = useState(null);
     const [nonStrikerStats, setNonStrikerStats] = useState(null);
     const [bowlerStats, setBowlerStats] = useState(null);
+    const [venue, setVenue] = useState(null);
+    const [target, setTarget] = useState(null);
 
     useEffect(() => {
         const FetchInningNumber = async () => {
@@ -105,6 +106,24 @@ const Scoreboard = ({id, count}) => {
                 console.error("Error fetching bowler stats", error);
             }
         };
+
+        const FetchVenue = async () => {
+            try {
+                const response = await fetchVenue(id);
+                setVenue(response.data.venue);
+            } catch (error) {
+                console.error("Error fetching venue", error);
+            }
+        };
+
+        const FetchTarget = async () => {
+            try {
+                const response = await fetchTarget(id);
+                setTarget(response.data.target);
+            } catch (error) {
+                console.error("Error fetching target", error);
+            }
+        };
         
       FetchInningNumber();
       FetchScore();
@@ -116,6 +135,8 @@ const Scoreboard = ({id, count}) => {
       FetchStrikerStats();
       FetchNonStrikerStats();
       FetchBowlerStats();
+      FetchVenue();
+      FetchTarget();
     }, [id, count]);
 
     return (
@@ -127,7 +148,7 @@ const Scoreboard = ({id, count}) => {
             <div className="scoreboard-item middle-item">
                 <div className="batting-data">
                     <p>
-                        <span>{striker}</span>
+                        <span>{striker}*</span>
                         <span>{strikerStats && strikerStats.runs}/{strikerStats && strikerStats.balls}</span>
                     </p>
                     <p>
@@ -140,19 +161,19 @@ const Scoreboard = ({id, count}) => {
                     <div className="score-top">
                         <div className="score-top-left">
                             <p className="score-top-left-p">
-                                <span className="bowling-team-text">NZ v</span>
-                                <span className="batting-team-text"> AUS</span>
+                                <span className="bowling-team-text">{bowlingTeam} v</span>
+                                <span className="batting-team-text"> {battingTeam}</span>
                                 {score && <span className="runs-wickets-text"> {score.runs}-{score.wickets}</span>}
                             </p>
                         </div>
 
                         <div className="score-top-right">
-                            {score && <p className="overs">{parseInt(score.balls/6)}.{score.balls%6}</p>}
+                            {score && <p className="overs">{parseInt(score.balls/6)}{score.balls%6!=0 && `.${score.balls%6}`}</p>}
                             
                         </div>
                     </div>
                     <div className="score-bottom">
-                        <p>{inningNumber==1?"Toss Details":"Target"}</p>
+                        <p>{inningNumber==1?`Live from ${venue}`:`Target ${target}`}</p>
                     </div>
                 </div>
     

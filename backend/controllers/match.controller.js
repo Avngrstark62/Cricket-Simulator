@@ -7,8 +7,7 @@ export const createMatch = async (req, res) => {
         
         const user = await User.findById(req.user.userId).select('-password');
         const userId = user._id;
-
-        // Create new match object
+        
         const newMatch = new Match({
             userId,
             teams: { teamA, teamB },
@@ -18,7 +17,7 @@ export const createMatch = async (req, res) => {
                 teamA: playingXI_A,
                 teamB: playingXI_B,
             },
-            // Initial state values
+            
             toss: {
                 winner: null,
                 electedTo: null
@@ -38,8 +37,7 @@ export const createMatch = async (req, res) => {
             status: "unfinished",
             winner: null,
         });
-
-        // Save match to database
+        
         await newMatch.save();
 
         return res.status(201).json({ success: true, match: newMatch });
