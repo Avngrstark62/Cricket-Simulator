@@ -29,7 +29,14 @@ export const login = async (req, res) => {
         if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
         const token = generateToken(user._id);
-        res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' });
+        // res.cookie('token', token, { httpOnly: true, secure: true, sameSite: 'strict' });
+
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production", // Secure only in production
+            sameSite: "None", // Allow cross-origin cookies
+        });
+
         res.json({ message: 'Logged in successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
