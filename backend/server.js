@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 const allowedOrigins = [
-    process.env.FRONTEND_BASE_URL, // Deployed frontend
+    process.env.VERCEL_FRONTEND_BASE_URL, // Deployed frontend
     "http://localhost:5173", // Local development (Vite default)
 ];
 
