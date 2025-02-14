@@ -3,6 +3,9 @@
 ## Overview
 The **Crickulator** is a web-based application that simulates entire cricket matches ball by ball using probability models and user interactions. Initially built using Python and Flask with an SQLite database, the project is now being transitioned to a JavaScript-based web application for better interactivity and scalability.
 
+## Live Demo
+Check out the live version of eCricket Simulator: [[https://crickulator.vercel.app/](https://crickulator.vercel.app/)].
+
 ## Features
 - Simulates full cricket matches ball by ball.
 - Uses probability models to determine match outcomes dynamically.
